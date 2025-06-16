@@ -1,13 +1,3 @@
-//Simulador de Navegacion en un Navegador Web
-
-//utilizar una pila, implementando: INSERTAR(push), ELIMINAR(pop), CIMA y PilaVacia
-
-
-//se requiere implementar un sistema de navegacion basica:
-//  visitar visitar una nueva pagina (push)
-//  atras   regresar a la pagina anterior (pop)
-//  actual  muestra la pagina web acutal (cima)
-//  mostrar_historial   muestra todas las paginas en la pila (de arriba hacia abajo)
 
 //Ejemplo de uso
 //visitar("https://..1")
@@ -22,77 +12,75 @@
 // https://..1
 // https://..2
 
-//Entregar en formato .txt
-// con un archivo README con instruccioness de uso y resumen de lo aprendido
-
-import java.util.Scanner;
-import java.util.Stack;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
     public static void main(String[] args) {
-        int MAX = 5, CIMA = 0;
-        Scanner scanner = new Scanner(System.in);
-        String[] url = new String[MAX];
-        String DATO="";
         int opcion;
+        int MAX = 5, CIMA =0;
+        String DATO = "";
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String[] url = new String[MAX];
 
-        do{
-            System.out.println("Menu - Historial");
-            System.out.println("1- Visitar");
-            System.out.println("2- Atras ");
-            System.out.println("3- Actual ");
-            System.out.println("4- Mostrar Historial");
-            System.out.println("5- Salir");
-            System.out.print("Elegir una opción: ");
+        while (true){
+            try {
+                do{
+                    System.out.println();
+                    System.out.println("Menu - Historial");
+                    System.out.println("1- Visitar");
+                    System.out.println("2- Atras ");
+                    System.out.println("3- Actual ");
+                    System.out.println("4- Mostrar Historial");
+                    System.out.println("5- Salir");
+                    System.out.print("Elegir una opción: ");
+                    opcion = Integer.parseInt(reader.readLine());
 
-            opcion = scanner.nextInt();
-            switch (opcion) {
-                case 1: {
-                    System.out.print("Url a buscar: ");
-                    DATO = scanner.nextLine();
-                    INSERTAR(url, MAX, CIMA, DATO);
-                    System.out.println(CIMA);
-                    break;
-                }
-                case 2: {
-                    ELIMINAR(url, CIMA, DATO);
-                    break;
-                }
-                case 3: {
-                    mostrarActual(url, CIMA);
-                    break;
-                }
-                case 4: {
-                    mostrarHistorial(url, CIMA);
-                    break;
-                }
+                    switch (opcion) {
+                        case 1: {
+                            System.out.print("Visitar: ");
+                            DATO = reader.readLine();
+                            if (CIMA < MAX){
+                                CIMA += 1;
+                                url[CIMA] = DATO;
+                            }else {
+                                System.err.println("El historial está lleno");
+                            }
+                            break;
+                        }
+
+                        case 2: {
+                            if (CIMA > 0){
+                                System.out.println("Url eliminada: "+url[CIMA]);
+                                CIMA -= 1;
+                            }else {
+                                System.err.println("El historial ya está vacio");
+                            }
+                            break;
+                        }
+
+                        case 3: {
+                            System.out.println("Url actual: "+url[CIMA]);
+                            break;
+                        }
+
+                        case 4: {
+                            for (int i=0;i<=CIMA;i++){
+                                System.out.printf("Url %d\t%s\n", i,url[i]);
+                            }
+                            break;
+                        }
+                    }
+                }while (opcion != 5);
+                break;
             }
-            }while (opcion != 5);
-        }
-
-    public static void mostrarHistorial(String[] url, int CIMA){
-
-    }
-
-    public static void mostrarActual(String[] url, int CIMA) {
-
-    }
-
-    public static void INSERTAR(String[] url, int MAX, int CIMA, String DATO){
-        if (CIMA < MAX){
-            CIMA = CIMA + 1;
-            url[CIMA] = DATO;
-        }else {
-            System.err.println("El historial está lleno");
-        }
-    }
-
-    public static void ELIMINAR(String[] url, int CIMA, String DATO){
-        if (CIMA > 0){
-            DATO = url[CIMA];
-            CIMA = CIMA - 1;
-        }else {
-            System.err.println("El historial ya está vacio");
+            catch (IOException e){
+                System.err.println("Error: " + e.getMessage());
+            }
+            catch (RuntimeException e){
+                System.err.println("Error: " + e.getMessage());
+            }
         }
     }
 }
