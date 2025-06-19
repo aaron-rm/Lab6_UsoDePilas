@@ -1,16 +1,4 @@
 
-//Ejemplo de uso
-//visitar("https://..1")
-//visitar("https://..2")
-//visitar("https://..3")
-// actual()
-// https://..3
-// atras()
-// actual()
-// https://..2
-// mostrar_historial()
-// https://..1
-// https://..2
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +16,7 @@ public class Main {
             try {
                 do{
                     System.out.println();
-                    System.out.println("Menu - Historial");
+                    System.out.println("Menu - Historial - Máximo: " + MAX);
                     System.out.println("1- Visitar");
                     System.out.println("2- Atras ");
                     System.out.println("3- Actual ");
@@ -39,20 +27,18 @@ public class Main {
 
                     switch (opcion) {
                         case 1: {
-                            System.out.print("Visitar: ");
-                            DATO = reader.readLine();
                             if (CIMA < MAX){
+                                System.out.print("Visitar: ");
+                                DATO = reader.readLine();
                                 url[CIMA] = DATO;
                                 CIMA += 1;
-                            }else {
-                                System.err.println("El historial está lleno");
-                            }
+                            }else System.err.println("El historial está lleno");
                             break;
                         }
 
                         case 2: {
                             if (CIMA > 0){
-                                System.out.println("Url eliminada: "+url[CIMA]);
+                                System.out.println("Url eliminada: "+url[CIMA-1]);
                                 CIMA -= 1;
                             }else {
                                 System.err.println("El historial ya está vacio");
@@ -61,13 +47,19 @@ public class Main {
                         }
 
                         case 3: {
-                            System.out.println("Url actual: "+url[CIMA-1]);
+                            if (CIMA == 0){
+                                System.out.println("No se ha ingresado ninguna url");
+                            }else System.out.println("Url actual: "+url[CIMA-1]);
                             break;
                         }
 
                         case 4: {
-                            for (int i=0;i<CIMA;i++){
-                                System.out.printf("Url %d\t%s\n", i,url[i]);
+                            System.out.println();
+                            System.out.println("Historial");
+                            if (CIMA==0){
+                                System.out.println("El historial está vacio");
+                            }else for (int i=0;i<CIMA;i++){
+                                System.out.printf("Url %d:\t%s\n", i,url[i]);
                             }
                             break;
                         }
