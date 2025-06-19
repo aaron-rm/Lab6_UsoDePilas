@@ -42,8 +42,8 @@ public class Main {
                             System.out.print("Visitar: ");
                             DATO = reader.readLine();
                             if (CIMA < MAX){
-                                CIMA += 1;
                                 url[CIMA] = DATO;
+                                CIMA += 1;
                             }else {
                                 System.err.println("El historial está lleno");
                             }
@@ -61,12 +61,12 @@ public class Main {
                         }
 
                         case 3: {
-                            System.out.println("Url actual: "+url[CIMA]);
+                            System.out.println("Url actual: "+url[CIMA-1]);
                             break;
                         }
 
                         case 4: {
-                            for (int i=0;i<=CIMA;i++){
+                            for (int i=0;i<CIMA;i++){
                                 System.out.printf("Url %d\t%s\n", i,url[i]);
                             }
                             break;
